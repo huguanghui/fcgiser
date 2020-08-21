@@ -1,0 +1,26 @@
+[TOC]
+
+# 开发日志
+
+## 确定开发目标
+
+1. 实现一个 HTTP 服务器 处理各种数据信息
+2. nginx + fcgi 方式
+3. 基础的文件操作
+
+## 开发进度
+
+### 20200818
+
+搭建一个 nginx 的 Web 服务器器
+配置好 fcgi 的配置
+使用域套接字来进行通讯
+实现基础的 hello world 交互命令
+
+#### nginx的源码编译 - 支持ssl
+
+```shell
+$ wget http://nginx.org/download/nginx-1.19.2.tar.gz
+```
+
+[参考](https://github.com/alash3al/http2fcgi/blob/master/main.go)
