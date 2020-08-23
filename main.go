@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net"
 	"net/http"
 	"net/http/fcgi"
@@ -23,6 +24,7 @@ func (s FastCGIServer) ServeHTTP(resp http.ResponseWriter, req *http.Request) {
 		if fun != nil {
 			fun.Opt(resp, req)
 		}
+		fmt.Printf("opt: %p fun: %p\n", opt, fun)
 	}
 }
 

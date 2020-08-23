@@ -26,8 +26,19 @@ type LogSt struct {
 }
 
 func init() {
+	fv1Log.AddMethod("GET", &EleMethod{Opt: logGet})
 	fv1Log.AddMethod("POST", &EleMethod{Opt: logPost})
 	CmdRuner.Use("/api/fv1/log", fv1Log)
+}
+
+func logGet(resp http.ResponseWriter, req *http.Request) int {
+	var res = Result{
+		Reusult:     0,
+		Description: "OK",
+	}
+	b, _ := json.Marshal(res)
+	resp.Write(b)
+	return 0
 }
 
 func logPost(resp http.ResponseWriter, req *http.Request) int {
