@@ -1,29 +1,32 @@
 package main
 
 import (
-	"fmt"
 	"net"
 	"net/http"
 	"net/http/fcgi"
-	"os"
+
+	"github.com/huguanghui/fcgiser/api"
 )
 
 type FastCGIServer struct{}
 
 func (s FastCGIServer) ServeHTTP(resp http.ResponseWriter, req *http.Request) {
-	fenv := fcgi.ProcessEnv(req)
-	for k, v := range fenv {
-		fmt.Printf("%s :%s\n", k, v)
+	defer req.Body.Close()
+	//	fenv := fcgi.ProcessEnv(req)
+	//	for k, v := range fenv {
+	//		fmt.Printf("%s :%s\n", k, v)
+	//	}
+	resp.Header().Set("Content-Type", "text/json;charset=utf-8")
+	opt := api.CmdRuner.Lookup(req.URL.RequestURI())
+	if opt != nil {
+		fun := opt.Lookup(req.Method)
+		if fun != nil {
+			fun.Opt(resp, req)
+		}
 	}
-	fmt.Println(req.Method)
-	fmt.Println(req.URL.RequestURI())
-	resp.Write([]byte("<h1>hello, 世界</h1>\n<p>huguanghui</p>"))
 }
 
 func main() {
-	args := os.Args
-	fmt.Println(args)
-	fmt.Println("hello xmake!")
 	listener, _ := net.Listen("tcp", "127.0.0.1:9001")
 	srv := new(FastCGIServer)
 	fcgi.Serve(listener, srv)

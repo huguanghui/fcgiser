@@ -24,3 +24,10 @@ $ wget http://nginx.org/download/nginx-1.19.2.tar.gz
 ```
 
 [参考](https://github.com/alash3al/http2fcgi/blob/master/main.go)
+
+### 20200821
+
+基本实现FastCGI的通讯方式
+下一步计划
+1. 创建一个保存文件的数据库
+2. URL处理的结构优化
